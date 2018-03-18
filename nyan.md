@@ -4,7 +4,8 @@ layout: default
 # Yay, this is nyan!
 ## What is nyan?
 I dont't know yet XD
-<button onclick="let logObject = document.querySelector('#log');if (log.style.display === 'none') {log.style.display = 'block';} else {log.style.display = 'block';}">Show/Hide Log</button>
+
+<button class="btn" onclick="let logObject = document.querySelector('#log');if (log.style.display === 'none') {log.style.display = 'block';} else {log.style.display = 'none';}">Show/Hide Log</button>
 <div id="log" style="display: none">
 	<script type="text/javascript" async>(function() {
 		for (let i = 1; i <= 500; i++) {
