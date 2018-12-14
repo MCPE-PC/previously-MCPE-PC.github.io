@@ -13,11 +13,12 @@
       crossorigin="anonymous">
   </head>
   <body>
-    <h1>개발자를 위힌 카카오링크 보내기</h1>
+    <h1>개발자를 위한 카카오링크 보내기</h1>
     <form action="javascript:void(0);">
       <label for="key">JavaScript Key: </label>
       <input id="key" type="text">
-      <button>
+      <input id="" type="button" class="btn btn-outline-primary" value="초기화"
+        onclick="Kakao.init($('#key').text());this.className = 'btn btn-outline-success';">
     </form>
 
     <script
