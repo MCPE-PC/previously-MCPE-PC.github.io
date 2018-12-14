@@ -6,22 +6,15 @@
     <noscript>
       <meta http-equiv="refresh" content="0; url=/javascript">
     </noscript>
+    <!--[if IE]>
+      <meta http-equiv="refresh" content="0">
+    <![endif]-->
     <title>카카오링크 보내기</title>
     <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous">
-  </head>
-  <body>
-    <h1>개발자를 위한 카카오링크 보내기</h1>
-    <form action="javascript:void(0);">
-      <label for="key">JavaScript Key: </label>
-      <input id="key" type="text">
-      <input id="init" type="button" class="btn btn-outline-primary"
-        value="초기화" onclick="init();">
-    </form>
-
-    <script
+        <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
@@ -37,16 +30,27 @@
     <script type="text/javascript">
       function init() {
         const initButton = $('#init');
+        const changeButton = function(status) {
+          initButton.removeClass();
+          initButton.addClass('btn btn-outline-' + status);
+        }
         if (initButton.hasClass('btn-outline-primary')) {
           Kakao.init($('#key').text());
-          initButton.removeClass();
-          initButton.addClass('btn btn-outline-success');
+          changeButton('success');
         } else {
-          initButton.removeClass();
-          initButton.addClass('btn btn-outline-danger');
+          changeButton('warning');
         }
       }
       function send() {}
     </script>
+  </head>
+  <body>
+    <h1>개발자를 위한 카카오링크 보내기</h1>
+    <form action="javascript:void(0);">
+      <label for="key">JavaScript 키: </label>
+      <input id="key" type="text">
+      <input id="init" type="button" class="btn btn-outline-primary"
+        value="초기화" onclick="init();">
+    </form>
   </body>
 </html>
