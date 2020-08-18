@@ -37,6 +37,8 @@ permalink: /woosh/
       new Promise(resolve => resolve(doWoosh()));
       event.returnValue = 'Are you sure to leave this page?';
     }
+
+    return event.returnValue;
   };
 
   setInterval(() => {
@@ -88,7 +90,7 @@ permalink: /woosh/
   
   function waitPaused() {
     if (state === 1) {
-      document.getElementById('status').textContent = 'Wooshing, paused <a onclick="paused = false;">[Resume now]</a>';
+      document.getElementById('status').innerHTML = 'Wooshing, paused <a onclick="paused = false;">[Resume now]</a>';
     }
     for (; pause || document.visibilityState !== 'visible';) {
       continue;
@@ -97,6 +99,10 @@ permalink: /woosh/
 
 
   for (;;) {
+    if (wooshStacks.length === 0) {
+      continue;
+    }
+
     document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
 
     if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
