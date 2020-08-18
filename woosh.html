@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Woosh! - WhatThePage?
+permalink: /woosh/
 ---
 <header><h1>Woosh!</h1></header>
 <noscript><h2>Please enable javascript first!</h2></noscript>
@@ -16,6 +17,7 @@ title: Woosh! - WhatThePage?
 <script>
   let currentStack = [-1, -1];
   let pause = false;
+  let stackPoint = [0, 0];
   let state = 0;
   let timeout = 0;
   let wooshStacks = [];
@@ -27,12 +29,13 @@ title: Woosh! - WhatThePage?
   
   window.onbeforeunload = event => {
     event.preventDefault();
-    pause = true;
 
     if (state === 1) {
+      pause = true;
       event.returnValue = 'Do you really believe, leaving now is all right?';
     } else {
-      doWoosh();
+      new Promise(resolve => resolve(doWoosh()));
+      event.returnValue = 'Are you sure to leave this page?';
     }
   };
 
@@ -90,9 +93,22 @@ title: Woosh! - WhatThePage?
       document.getElementById('status').textContent = 'Wooshing, paused <a onclick="paused = false;">[Resume now]</a>';
     }
     for (;;) {
-      if (!pause) {
+      if (!pause && document.visibilityState === 'visible') {
         return;
       }
     }
   }
+
+  setInterval(() => {
+    textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
+      
+    if (wooshStacks[stackPoint[0]][0] - stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
+      stackPoint[0] += 1;
+      stackPoint[1] = 0;
+
+      if (stackPoint[0] === wooshStacks.length) {
+        stackPoint[0] = 0;
+      }
+    }
+  }, 10);
 </script>
