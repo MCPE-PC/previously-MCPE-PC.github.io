@@ -14,10 +14,11 @@ title: Woosh! - WhatThePage?
     </div>
 </div>
 <script>
+  let currentStack = [-1, -1];
   let pause = false;
   let state = 0;
   let timeout = 0;
-  let wooshStack = [];
+  let wooshStacks = [];
 
   window.onload = () => {
     document.getElementById('woosh').style.display = 'block';
@@ -38,7 +39,7 @@ title: Woosh! - WhatThePage?
   setInterval(() => {
     if (timeout > 0) {
       timeout -= 1;
-      document.getElementById('timeout').text = timeout.toString();
+      document.getElementById('timeout').textContent = timeout.toString();
 
       if (timeout === 0 && state !== 1) {
         doWoosh();
@@ -55,8 +56,8 @@ title: Woosh! - WhatThePage?
         waitPaused();
       }
 
-      wooshStack.push(i);
-      document.getElementById('status').text = 'Wooshing' + '.'.repeat(i);
+      stack(i);
+      document.getElementById('status').textContent = 'Wooshing' + '.'.repeat(i);
 
       if (!window.confirm('Your favorite number is ' + i + '. Am I right?')) {
         window.alert('Gosh!');
@@ -65,15 +66,28 @@ title: Woosh! - WhatThePage?
       }
     }
 
-    document.getElementById('status').text = 'Absolutely completed';
+    stack(-1);
+    document.getElementById('status').textContent = 'Absolutely completed';
     document.body.display = 'block';
     state = 2;
     timeout = 600;
   }
+
+  function stack(i) {
+    if (i === currentStack[1] - 1) {
+      currentStack[1] -= 1;
+    } else {
+      if (currentStack[0] >= 0) {
+        wooshStacks.push(currentStack);
+      }
+
+      currentStack = [i, i];
+    }
+  }
   
   function waitPaused() {
     if (state === 1) {
-      document.getElementById('status').text = 'Wooshing, paused <a onclick="paused = false;">[Resume now]</a>';
+      document.getElementById('status').textContent = 'Wooshing, paused <a onclick="paused = false;">[Resume now]</a>';
     }
     for (;;) {
       if (!pause) {
