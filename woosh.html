@@ -1,0 +1,84 @@
+---
+layout: default
+title: Woosh! - WhatThePage?
+---
+<header><h1>Woosh!</h1></header>
+<noscript><h2>Please enable javascript first!</h2></noscript>
+<div id="woosh" style="display: none;">
+    <h2>Professional Hackers' Panel. Woosh...!</h2>
+    <b>Status: <span id="status">None</span></b>
+    <p align="right">My woosh timeout: <span id="timeout">-</span>s</p>
+    <h3>Numbers Gallery</h3>
+    <div id="gallery" style="width: 25%; padding-top: 50%; background-color: grey; border: 1px solid black; border-radius: 15px;">
+        Try Woosh!
+    </div>
+</div>
+<script>
+  let pause = false;
+  let state = 0;
+  let timeout = 0;
+  let wooshStack = [];
+
+  window.onload = () => {
+    document.getElementById('woosh').style.display = 'block';
+    doWoosh();
+  };
+  
+  window.onbeforeunload = event => {
+    event.preventDefault();
+
+    if (state === 1) {
+      pause = true;
+      event.returnValue = 'Do you really believe, leaving now is all right?';
+    } else {
+      doWoosh();
+    }
+  };
+
+  setInterval(() => {
+    if (timeout > 0) {
+      timeout -= 1;
+      document.getElementById('timeout').text = timeout.toString();
+
+      if (timeout === 0 && state !== 1) {
+        doWoosh();
+      }
+    }
+  }, 1000);
+  
+  function doWoosh() {
+    document.body.display = 'none';
+    state = 1;
+
+    for (let i = Math.floor(Math.random() * 1801) + 200; i > 0; i -= 1) {
+      if (pause) {
+        waitPaused();
+      }
+
+      wooshStack.push(i);
+      document.getElementById('status').text = 'Wooshing' + '.'.repeat(i);
+
+      if (!window.confirm('Your favorite number is ' + i + '. Am I right?')) {
+        window.alert('Gosh!');
+        doWoosh();
+        return;
+      }
+    }
+
+    document.getElementById('status').text = 'Absolutely completed';
+    document.body.display = 'block';
+    state = 2;
+    timeout = 600;
+  }
+  
+  function waitPaused() {
+    if (state === 1) {
+      document.getElementById('status').text = 'Wooshing, paused <a onclick="paused = false;">[Resume now]</a>';
+    }
+    for (;;) {
+      if (!pause) {
+        return;
+      }
+    }
+  }
+</script>
