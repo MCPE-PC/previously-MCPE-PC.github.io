@@ -55,9 +55,7 @@ permalink: /woosh/
     state = 1;
 
     for (let i = Math.floor(Math.random() * 1801) + 200; i > 0; i -= 1) {
-      if (pause) {
-        waitPaused();
-      }
+      waitPaused();
 
       stack(i);
       document.getElementById('status').textContent = 'Wooshing' + '.'.repeat(i);
@@ -81,7 +79,7 @@ permalink: /woosh/
       currentStack[1] -= 1;
     } else {
       if (currentStack[0] >= 0) {
-        wooshStacks.push(currentStack);
+        wooshStacks.push(new Uint16Array(currentStack));
       }
 
       currentStack = [i, i];
@@ -92,15 +90,13 @@ permalink: /woosh/
     if (state === 1) {
       document.getElementById('status').textContent = 'Wooshing, paused <a onclick="paused = false;">[Resume now]</a>';
     }
-    for (;;) {
-      if (!pause && document.visibilityState === 'visible') {
-        return;
-      }
+    for (; pause || document.visibilityState !== 'visible';) {
+      continue;
     }
   }
 
   setInterval(() => {
-    textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
+    document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
       
     if (wooshStacks[stackPoint[0]][0] - stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
       stackPoint[0] += 1;
