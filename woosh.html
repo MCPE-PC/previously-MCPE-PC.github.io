@@ -6,10 +6,10 @@ title: Woosh! - WhatThePage?
 <noscript><h2>Please enable javascript first!</h2></noscript>
 <div id="woosh" style="display: none;">
     <h2>Professional Hackers' Panel. Woosh...!</h2>
-    <b>Status: <span id="status">None</span></b>
+    <p align="center"><b>Status: <span id="status">None</span></b></p>
     <p align="right">My woosh timeout: <span id="timeout">-</span>s</p>
     <h3>Numbers Gallery</h3>
-    <div id="gallery" style="width: 25%; padding-top: 50%; background-color: grey; border: 1px solid black; border-radius: 15px;">
+    <div id="gallery" style="margin: 0; padding: 0; width: 25%; border: 1px solid black; border-radius: 15px;">
         Try Woosh!
     </div>
 </div>
@@ -26,9 +26,9 @@ title: Woosh! - WhatThePage?
   
   window.onbeforeunload = event => {
     event.preventDefault();
+    pause = true;
 
     if (state === 1) {
-      pause = true;
       event.returnValue = 'Do you really believe, leaving now is all right?';
     } else {
       doWoosh();
