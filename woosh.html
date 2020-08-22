@@ -23,6 +23,7 @@ permalink: /woosh/
   let wooshStacks = [];
 
   window.onload = () => {
+    gallerySlideShow();
     document.getElementById('woosh').style.display = 'block';
     doWoosh();
   };
@@ -40,17 +41,6 @@ permalink: /woosh/
 
     return event.returnValue;
   };
-
-  setInterval(() => {
-    if (timeout > 0) {
-      timeout -= 1;
-      document.getElementById('timeout').textContent = timeout.toString();
-
-      if (timeout === 0 && state !== 1) {
-        doWoosh();
-      }
-    }
-  }, 1000);
   
   function doWoosh() {
     document.body.style.display = 'none';
@@ -97,21 +87,36 @@ permalink: /woosh/
     }
   }
 
+  function gallerySlideShow() {
+    setTimeout(() => {
+      if (wooshStacks.length !== 0 && document.visibilityState === 'visible') {
+        document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
+
+        if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
+          stackPoint[0] += 1;
+          stackPoint[1] = 0;
+
+          if (stackPoint[0] === wooshStacks.length) {
+            stackPoint[0] = 0;
+          }
+        }
+      }
+
+      gallerySlideShow();
+    }, 200);
+  }
 
   setInterval(() => {
-    if (wooshStacks.length === 0) {
-      return;
-    }
+    if (timeout > 0) {
+      timeout -= 1;
 
-    document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
+      if (document.visibilityState === 'visible') {
+        document.getElementById('timeout').textContent = timeout.toString();
+      }
 
-    if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
-      stackPoint[0] += 1;
-      stackPoint[1] = 0;
-
-      if (stackPoint[0] === wooshStacks.length) {
-        stackPoint[0] = 0;
+      if (timeout === 0 && state !== 1) {
+        doWoosh();
       }
     }
-  }, 250);
+  }, 1000);
 </script>
