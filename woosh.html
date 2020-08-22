@@ -88,22 +88,20 @@ permalink: /woosh/
   }
 
   function gallerySlideShow() {
-    setTimeout(() => {
-      if (wooshStacks.length !== 0 && document.visibilityState === 'visible') {
-        document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
+    setTimeout(gallerySlideShow, 100);
 
-        if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
-          stackPoint[0] += 1;
-          stackPoint[1] = 0;
+    if (wooshStacks.length !== 0 && document.visibilityState === 'visible') {
+      document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
 
-          if (stackPoint[0] === wooshStacks.length) {
-            stackPoint[0] = 0;
-          }
+      if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
+        stackPoint[0] += 1;
+        stackPoint[1] = 0;
+
+        if (stackPoint[0] === wooshStacks.length) {
+          stackPoint[0] = 0;
         }
       }
-
-      gallerySlideShow();
-    }, 200);
+    }
   }
 
   setInterval(() => {
