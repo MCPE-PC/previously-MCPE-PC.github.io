@@ -53,7 +53,7 @@ permalink: /woosh/
   }, 1000);
   
   function doWoosh() {
-    document.body.display = 'none';
+    document.body.style.display = 'none';
     state = 1;
 
     for (let i = Math.floor(Math.random() * 1801) + 200; i > 0; i -= 1) {
@@ -71,7 +71,7 @@ permalink: /woosh/
 
     stack(-1);
     document.getElementById('status').textContent = 'Absolutely completed';
-    document.body.display = 'block';
+    document.body.style.display = 'block';
     state = 2;
     timeout = 600;
   }
@@ -98,20 +98,22 @@ permalink: /woosh/
   }
 
 
-  for (;;) {
-    if (wooshStacks.length === 0) {
-      continue;
-    }
+  new Promise(() => {
+    for (;;) {
+      if (wooshStacks.length === 0) {
+        continue;
+      }
 
-    document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
+      document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
 
-    if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
-      stackPoint[0] += 1;
-      stackPoint[1] = 0;
+      if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
+        stackPoint[0] += 1;
+        stackPoint[1] = 0;
 
-      if (stackPoint[0] === wooshStacks.length) {
-        stackPoint[0] = 0;
+        if (stackPoint[0] === wooshStacks.length) {
+          stackPoint[0] = 0;
+        }
       }
     }
-  }
+  });
 </script>
