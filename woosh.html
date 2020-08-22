@@ -35,7 +35,13 @@ permalink: /woosh/
       pause = true;
       event.returnValue = 'Do you really believe, leaving now is all right?';
     } else {
-      new Promise(resolve => resolve(doWoosh()));
+      new Promise(resolve => {
+        try {
+          resolve(doWoosh());
+        } finally {
+          window.onbeforeunload();
+        }
+      });
       event.returnValue = 'Are you sure to leave this page?';
     }
 
@@ -92,6 +98,7 @@ permalink: /woosh/
 
     if (wooshStacks.length !== 0 && document.visibilityState === 'visible') {
       document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
+      stackPoint[1] += 1;
 
       if (stackPoint[1] === wooshStacks[stackPoint[0]][1]) {
         stackPoint[0] += 1;
