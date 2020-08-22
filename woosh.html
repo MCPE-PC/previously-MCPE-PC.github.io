@@ -100,7 +100,7 @@ permalink: /woosh/
 
   setInterval(() => {
     if (wooshStacks.length === 0) {
-      continue;
+      return;
     }
 
     document.getElementById('gallery').textContent = wooshStacks[stackPoint[0]][0] - stackPoint[1];
