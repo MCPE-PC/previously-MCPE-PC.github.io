@@ -1,0 +1,12 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+footer > span {
+  display: block;
+}
+
+footer > span:last-child {
+  display: inline;
+}
